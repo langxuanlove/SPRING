@@ -1,0 +1,17 @@
+CACHE MANIFEST
+
+# VERSION 0.3
+
+# 直接缓存的文件
+CACHE:
+css/index.css
+video/重超第十四轮集锦.mp4
+video/2016四川业余足球联赛遂宁赛区航拍集锦_超清.mp4
+video/北京工商学院VS北京理工大学.mp4
+video/2016“陈毅杯“业余足球锦标赛决赛上海申梵1：0东华创林_超清.mp4
+video/汉为体育丨全国足球重点城市·2016武汉城市足球超级联赛（第三轮集锦）_超清.mp4
+# 需要在线访问的文件
+NETWORK:
+*
+# 替代方案
+FALLBACK:

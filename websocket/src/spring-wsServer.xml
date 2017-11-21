@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans  
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+    <!--可以bean方式实例化  <jaxrs:server id="ibusCommonRest" serviceClass="com.gnet.ws.impl.WsCommonImpl" address="/Gnet_WebServiceRest"> -->
+	<jaxrs:server id="ibusCommonRest" address="/Gnet_WebServiceRest">
+		<jaxrs:serviceBeans>
+			 <ref bean="ibusWsCommon"  />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="cn" value="cn-ZH"/>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+		<jaxrs:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
+			<bean class="com.gnet.ws.impl.MyInterceptor"></bean>
+		</jaxrs:inInterceptors>
+		<jaxrs:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"></bean>
+		</jaxrs:outInterceptors>
+		
+	</jaxrs:server>
+
+	<jaxws:endpoint id="commonService" 
+		implementor="com.gnet.ws.impl.WsCommonImpl" address="/Gnet_WebService">
+		<jaxws:inInterceptors>
+			<!-- <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" /> -->
+			<bean class="com.gnet.ws.impl.MyInterceptor"></bean>
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	
+
+</beans>

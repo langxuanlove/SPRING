@@ -1,0 +1,39 @@
+@charset "utf-8";
+body,html{
+    height: 100%;
+    background: #eee;
+}
+.module-wrapper{
+    -webkit-box-shadow: 0 0 6px rgba(136,156,176,0.1);
+    -moz-box-shadow: 0 0 6px rgba(136,156,176,0.1);
+    -ms-box-shadow:0 0 6px rgba(136,156,176,0.1);
+    box-shadow: 0 0 6px rgba(136,156,176,0.1);
+    border-radius: 4px;
+    background: #fff;
+}
+.map-icons{
+    width: 31px;
+    background: url("../source/images/map-icons.png") no-repeat;
+    background-size: cover;
+}
+.map-icons.cup-icon{
+    height: 27px;
+    background-position: 0 0;
+}
+.map-icons.flag-icon{
+    height: 28px;
+    background-position: 0 -47px;
+}
+.map-icons.player-icon{
+    width: 31px;
+    height: 31px;
+    background-position: 0 -95px;
+}
+.map-icons.judge-icon{
+    height: 26px;
+    background-position: 0 -146px;
+}
+.map-icons.heart-icon{
+    height: 25px;
+    background-position: 0 -192px;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+	http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+    
+	<context:annotation-config />
+	<!-- 把标记了@Controller注解的类转换为bean -->
+	<context:component-scan base-package="com.gnet" />
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+		
+	<bean id="springConfigTool" class="com.gnet.utils.SpringConfigTool"/>
+	
+<!-- JDBC模板 -->  
+    <bean id="jdbcTemplate"  
+        class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>
+	<!-- 配置连接数据库 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+   		<property name="jdbcUrl" value="jdbc:mysql://"></property>
+   		<property name="user" value="root"></property>
+   		<property name="password" value="123456"></property>
+    	<property name="minPoolSize" value="10" />
+    	<property name="maxPoolSize" value="100" />
+    	<property name="maxIdleTime" value="60" />
+    	<property name="acquireIncrement" value="2" />
+    	<property name="maxStatements" value="0" />
+    	<property name="initialPoolSize" value="10" />
+    	<property name="idleConnectionTestPeriod" value="60" />
+    	<property name="testConnectionOnCheckin" value="true" />
+    	<property name="testConnectionOnCheckout" value="true" />
+    	<property name="acquireRetryAttempts" value="30" />
+    	<property name="acquireRetryDelay" value="100" />
+    	<property name="breakAfterAcquireFailure" value="true" />
+	</bean>
+	<bean id="txManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>
+    
+</beans>
