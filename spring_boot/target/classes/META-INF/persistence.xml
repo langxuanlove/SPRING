@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<!-- 为持久化单元取名为 paypersistence -->
+    <persistence-unit name="demopersistence" transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <!--配置Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <!--配置数据库驱动 -->
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <!--配置数据库用户名 -->
+            <property name="hibernate.connection.username" value="root" />
+            <!--配置数据库密码 -->
+            <property name="hibernate.connection.password" value="123456" />
+            <!--配置数据库url -->
+            <property name="hibernate.connection.url" value="jdbc:mysql://192.168.4.52:3306/test" />
+            <!--设置外连接抓取树的最大深度 -->
+            <property name="hibernate.max_fetch_depth" value="3" />
+            <!--自动输出schema创建DDL语句 -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true"/>
+	    	<property name="hibernate.format_sql" value="false"/>    
+	    	
+	    			
+            <!--  
+            <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider"/>
+            -->
+			<!-- 初始连接数, 默认为3，小于2无效-->
+            <property name="hibernate.c3p0.initialPoolSize" value="2"/>
+		    <!-- 最小连接数 -->
+		    <property name="hibernate.c3p0.min_size" value="1"/> 
+		    <!-- 最大连接数 --> 
+		    <property name="hibernate.c3p0.max_size" value="30"/>
+		    <!--最大空闲时间,120秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 --> 
+		    <property name="hibernate.c3p0.timeout" value="120"/> 
+		    <!-- 最大的PreparedStatement的数量 -->
+		    <property name="hibernate.c3p0.max_statements" value="50"/>
+		    <!-- 每隔30分钟检查连接池里的空闲连接 ，单位是秒，实际会重置数据库端的空闲时间-->
+		    <property name="hibernate.c3p0.idle_test_period" value="1800"/>  
+		    <!-- 当连接池里面的连接用完的时候，C3P0一下获取的新的连接数 -->
+		    <property name="hibernate.c3p0.acquire_increment" value="2"/>
+		    <!-- 是否每次都验证连接是否可用 -->
+		    <property name="hibernate.c3p0.validate" value="false"/> 
+		     
+        </properties>
+    </persistence-unit>
+
+</persistence>

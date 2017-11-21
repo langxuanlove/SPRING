@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rop="http://www.rop.com/schema/rop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.rop.com/schema/rop http://www.rop.com/schema/rop/rop-1.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <!--自己的Spring Bean-->
+    <context:component-scan base-package="com.keytec.activemq"/>
+    
+    <!-- 启动Rop框架 -->
+    <rop:annotation-driven
+            id="router"  
+          	app-secret-manager="lzaAppSecretManager"
+            session-manager="sampleSessionManager"
+            formatting-conversion-service="conversionService"
+            ext-error-base-names="i18n/rop/sampleRopError,i18n/rop/sampleRopError1"
+            service-timeout-seconds="50"
+            upload-file-max-size="5000"
+            upload-file-types="jpg,png,gif"
+            core-pool-size="200"
+            max-pool-size="500"
+            queue-capacity="50"
+            keep-alive-seconds="300"
+            sign-enable="true"/>
+        
+        <!-- 线程相关，存在于rop:annotation-driven配置节 -->
+        <!--     thread-ferry-class="com.razar.gpsTracker.rop.SampleThreadFerry" -->
+            
+    <!-- 自定义开发者账号管理类 -->
+  	<bean id="lzaAppSecretManager" class="com.keytec.activemq.secret.LzaAppSecretManager"/> 
+    <bean id="sampleSessionManager" class="com.keytec.activemq.rop.SampleSessionManager" />
+    <!--   启用它需要在rop:annotation-driven配置节加入 invoke-times-controller="invokeTimesController" 属性 -->
+   <!--  <bean id="invokeTimesController" class="com.razar.gpsTracker.rop.SampleInvokeTimesController"/> -->
+    
+    <!-- 开发者权限控制类 ,启用它需要在rop:annotation-driven配置节加入service-access-controller="serviceAccessController"属性-->
+    <!--<bean id="serviceAccessController" class="com.rop.sample.SampleServiceAccessController"/>-->
+
+    <!--设置自定义的类型转换服务，注册自定义的类型转换器,启用它需要在rop:annotation-driven配置节加入            formatting-conversion-service="conversionService"属性-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.keytec.activemq.rop.DateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--注册拦截器，可配置多个-->
+    <!--<rop:interceptors>
+        <bean class="com.razar.gpsTracker.permissionManager.InterfacePermission"/>
+        <bean class="com.razar.gpsTracker.common.URLDecode"/>
+    </rop:interceptors>
+
+    -->
+    <!--注册拦截器，可配置多个-->
+<!--     <rop:interceptors>
+        <bean class="com.razar.gpsTracker.permissionManager.InterfacePermission"/>
+    </rop:interceptors> -->
+
+    <!--注册监听器，可配置多具--><!--
+    <rop:listeners>
+        <bean class="com.rop.sample.SamplePostInitializeEventListener"/>
+        <bean class="com.rop.sample.SamplePreDoServiceEventListener"/>
+        <bean class="com.rop.sample.SampleAfterDoServiceEventListener"/>
+    </rop:listeners>
+
+    --><!--自定义method,appKey等这些系统级参数的参数名-->
+    <rop:sysparams
+            format-param-name="messageFormat"
+            jsonp-param-name="__invoke"/>
+
+</beans>
